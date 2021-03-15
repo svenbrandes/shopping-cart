@@ -1,6 +1,11 @@
 import CartItem from "./CartItem";
 
 const CartItems = ({items}) => {
+
+    const totalSum = () => {
+        return items.map(item => item.quantity*item.product.priceInCents).reduce((acc, cur) => acc+cur, 0);
+    };
+
     return (
         <div className="container">
             <h1>Cart Items</h1>
@@ -17,6 +22,7 @@ const CartItems = ({items}) => {
                                              price={item.product.priceInCents}
                                              quantity={item.quantity}/>)}
             </div>
+            <div>Total Price: ${totalSum()/100}</div>
         </div>
     )
 }

@@ -4,7 +4,7 @@ class AddItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 0,
+            quantity: "",
             product: this.props.products[0]
         };
     }
@@ -21,6 +21,9 @@ class AddItem extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onItemAdded(this.state);
+        this.setState({
+            quantity: ""
+        })
     }
 
     render() {
@@ -29,7 +32,7 @@ class AddItem extends Component {
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <label>Quantity</label>
-                    <input onChange={this.onChange} id="quantity" className="form-control"/>
+                    <input onChange={this.onChange} id="quantity" className="form-control" value={this.state.quantity}/>
                 </div>
                 <div className="form-group">
                     <label>Products</label>
