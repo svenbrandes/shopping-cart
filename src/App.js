@@ -23,12 +23,25 @@ class App extends Component {
         this.setState({products: products, cartItemsList: items});
     }
 
-    addItem = item => {
+    addItemOLD = item => {
         const indexOfItem = this.state.cartItemsList.findIndex(existingItem => existingItem.product_id == item.product_id);
         const updatedItems = [...this.state.cartItemsList];
         indexOfItem === -1 ? updatedItems.concat(item) :
             updatedItems[indexOfItem].quantity = updatedItems[indexOfItem].quantity+item.quantity;
         this.setState({cartItemsList: updatedItems});
+    }
+
+    addItem = async itemToAdd => {
+        const response = await fetch('http://localhost:8082/api/items', {
+            method: 'POST',
+            body: JSON.stringify(itemToAdd),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        });
+        const item = await response.json();
+        this.setState({cartItemsList: [...this.state.cartItemsList, item]});
     }
 
     render() {
