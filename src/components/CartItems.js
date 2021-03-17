@@ -1,9 +1,9 @@
 import CartItem from "./CartItem";
 
-const CartItems = ({items}) => {
+const CartItems = ({items, products}) => {
 
     const totalSum = () => {
-        return items.map(item => item.quantity*item.product.priceInCents).reduce((acc, cur) => acc+cur, 0);
+        return items.map(item => item.quantity*products.find(product => product.id === item.product_id).priceInCents).reduce((acc, cur) => acc+cur, 0);
     };
 
     return (
@@ -17,9 +17,9 @@ const CartItems = ({items}) => {
                         <div className="col-md-2">Quantity</div>
                     </div>
                 </div>
-                {items.map(item => <CartItem id={item.id}
-                                             product={item.product.name}
-                                             price={item.product.priceInCents}
+                {items.map(item => <CartItem
+                                             product={products.find(product => product.id === item.product_id).name}
+                                             price={products.find(product => product.id === item.product_id).priceInCents}
                                              quantity={item.quantity}/>)}
             </div>
             <div>Total Price: ${totalSum()/100}</div>
