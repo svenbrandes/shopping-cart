@@ -16,8 +16,8 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        const responseProducts = await fetch("http://localhost:8082/api/products");
-        const responseItems = await fetch("http://localhost:8082/api/items");
+        const responseProducts = await fetch(`${process.env.REACT_APP_API_URL}/api/products`);
+        const responseItems = await fetch(`${process.env.REACT_APP_API_URL}/api/items`);
         const products = await responseProducts.json();
         const items = await responseItems.json();
         this.setState({products: products, cartItemsList: items});
@@ -32,7 +32,7 @@ class App extends Component {
     }
 
     addItem = async itemToAdd => {
-        const response = await fetch('http://localhost:8082/api/items', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/items`, {
             method: 'POST',
             body: JSON.stringify(itemToAdd),
             headers: {
